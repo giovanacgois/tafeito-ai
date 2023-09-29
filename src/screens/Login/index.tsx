@@ -16,6 +16,7 @@ import {
 import { CustomizedCardHeader } from "./styles";
 import { useEffect, useState } from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isButtonActive, setIsButtonActive] = useState(true);
@@ -23,6 +24,8 @@ export default function Login() {
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -63,7 +66,7 @@ export default function Login() {
         } else if (data.responseStatus === 400) {
           setErrorMessage("Requisição inválida!");
         } else if (data.responseStatus === 200) {
-          alert("Requisição válida!");
+          navigate('/tarefas');
         }
       })
       .catch((error) =>
