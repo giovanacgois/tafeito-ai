@@ -1,10 +1,17 @@
-import React, {ReactNode} from "react";
-import logo from "./logo.svg";
+import React, { ReactNode } from "react";
 import "./App.css";
-import Login from "./screens/Login";
+import AuthProvider from "./provider/authProvider";
 
-function App(props:{children:ReactNode}) {
-  return <div className="App">{props.children}</div>;
+import Routes from "./routes";
+
+function App() {
+  return (
+    <div className="App">
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </div>
+  );
 }
 
 export default App;

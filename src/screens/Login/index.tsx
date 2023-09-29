@@ -1,24 +1,29 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
+// import CardHeader from '@mui/material/CardHeader';
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
 import {
-  Box,
-  CardActions,
-  FilledInput,
   FormControl,
-  IconButton,
-  InputAdornment,
   InputLabel,
-  TextField,
+  FilledInput,
+  InputAdornment,
+  IconButton,
   Typography,
 } from "@mui/material";
-import { CustomizedCardHeader } from "./styles";
-import { useEffect, useState } from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+
+import { CustomizedCardHeader } from "./styles";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+import { useAuth } from "../../provider/authProvider";
+const Login = () => {
+  const { token, setToken } = useAuth();
+
   const [isButtonActive, setIsButtonActive] = useState(true);
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -26,6 +31,16 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/tarefas", { replace: true });
+    }
+  }, [token]);
 
   useEffect(() => {
     if (
@@ -35,12 +50,10 @@ export default function Login() {
       password !== ""
     ) {
       setIsButtonActive(false);
+    } else {
+      setIsButtonActive(true);
     }
   }, [username, password]);
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const postLogin = () => {
     const requestOptions = {
@@ -61,72 +74,75 @@ export default function Login() {
         };
       })
       .then((data) => {
+        console.log("sucesso", JSON.stringify(data));
+        console.log(data);
         if (data.responseStatus === 422 && data.data?.mensagem) {
           setErrorMessage(data.data?.mensagem);
         } else if (data.responseStatus === 400) {
           setErrorMessage("Requisição inválida!");
         } else if (data.responseStatus === 200) {
-          navigate('/tarefas');
+          if (data?.data?.token) {
+            setToken(data?.data?.token);
+          }
         }
       })
       .catch((error) =>
         setErrorMessage("Erro no servidor, tente novamente em alguns minutos!")
       );
   };
-
   return (
     <Box
       sx={{
         width: "100%",
         height: "100%",
+        alignItems: "center",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
       <Card sx={{ maxWidth: 480 }}>
         <CustomizedCardHeader
-          title={"TaFeito"}
-          subheader={"Transforme suas tarefas em ações"}
-        ></CustomizedCardHeader>
-
+          title="Tafeito"
+          subheader="Transforme suas tarefas em ações"
+        />
         <CardContent>
           <Box py={1}>
             <TextField
+              onChange={(newValue) => {
+                setUsername(newValue.target.value);
+              }}
               fullWidth
               id="username"
               label="Usuário"
               variant="filled"
-              value={username}
-              onChange={(newValue) => setUsername(newValue.target.value)}
             />
           </Box>
-
-          <FormControl sx={{ width: "100%" }} variant="filled">
-            <InputLabel htmlFor="filled-adornment-password">
-              Password
-            </InputLabel>
-            <FilledInput
-              onChange={(newValue) => {
-                setPassword(newValue.target.value);
-              }}
-              id="filled-adornment-password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+          <Box py={1}>
+            <FormControl sx={{ width: "100%" }} variant="filled">
+              <InputLabel htmlFor="filled-adornment-password">
+                Password
+              </InputLabel>
+              <FilledInput
+                onChange={(newValue) => {
+                  setPassword(newValue.target.value);
+                }}
+                id="filled-adornment-password"
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Box>
         </CardContent>
-
         <CardActions>
           <Box
             sx={{
@@ -143,8 +159,12 @@ export default function Login() {
             </Box>
             <Box width={"100%"}>
               <Button
-                sx={{ width: "100%" }}
-                onClick={() => postLogin()}
+                sx={{
+                  width: "100%",
+                }}
+                onClick={() => {
+                  postLogin();
+                }}
                 disabled={isButtonActive}
                 fullWidth
                 variant="contained"
@@ -157,4 +177,6 @@ export default function Login() {
       </Card>
     </Box>
   );
-}
+};
+
+export default Login;

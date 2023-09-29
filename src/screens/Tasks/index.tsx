@@ -11,13 +11,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import TaskAlt from "@mui/icons-material/TaskAlt";
 import Logout from "@mui/icons-material/Logout";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../../provider/authProvider";
 
 const Tasks = () => {
-
   const navigate = useNavigate();
-
+  const { setToken } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -32,19 +32,25 @@ const Tasks = () => {
 
   const logout = () => {
     setAnchorElUser(null);
-    navigate('/');
-  }
+    setToken(null);
+    navigate("/login", { replace: true });
+  };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{
-          justifyContent: 'space-between'
-        }}>
-          <Box sx={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <TaskAlt sx={{ display: "flex", mr: 2 }} />
 
             <Typography
