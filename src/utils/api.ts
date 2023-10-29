@@ -3,3 +3,4 @@ export const URL_USUARIOS = `${BASE_API}/usuarios`;
 export const URL_LOGIN = `${URL_USUARIOS}/login`;
 export const URL_CATEGORIAS = `${BASE_API}/categorias`;
 export const URL_TAREFAS = `${BASE_API}/tarefas`;
+export const URL_TAREFAS_ATUALIZAR = `${BASE_API}/tarefas/:id`;

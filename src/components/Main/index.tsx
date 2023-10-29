@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import TaskInput from "../TaskInput";
+import TaskInputWrapper from "../TaskInputWrapper";
 
 import { CustomizedSectionBox } from "./styles";
 import { useEffect, useState } from "react";
@@ -8,19 +8,22 @@ import axios from "axios";
 import { Categoria, Tarefa } from "../../utils/model";
 import TaskList from "../TaskList";
 import { MainProps } from "./Main";
+import { useGlobalContext } from "../../utils/Global";
 import { URL_CATEGORIAS } from "../../utils/api";
 
 const Main = (props: MainProps) => {
   const { categorias } = props;
 
-  const [selectedTaskInput, setSelectedTaskInput] = useState<string | null>(
-    null
-  );
-  const [refetchtaskStatus, setRefectchTaskStatus] = useState<number>(0);
+  const { isEditingTask, selectedTaskInput, refetchtaskStatus } =
+    useGlobalContext();
 
-  const renderCategoriaSection = (categoriaItem: Categoria) => {
+  const renderCategoriaSection = (categoria_item: Categoria) => {
+    const showTaskInput =
+      isEditingTask === false &&
+      (selectedTaskInput === null ||
+        selectedTaskInput === categoria_item.descricao);
     return (
-      <CustomizedSectionBox key={categoriaItem.id} pt={2} pb={1}>
+      <CustomizedSectionBox key={categoria_item.id} pt={2} pb={1}>
         <Typography
           variant="h2"
           sx={{
@@ -28,21 +31,13 @@ const Main = (props: MainProps) => {
             marginBottom: "8px",
           }}
         >
-          {categoriaItem.descricao}
+          {" "}
+          {categoria_item.descricao}{" "}
         </Typography>
 
-        <TaskList categoria={categoriaItem} taskStatus={refetchtaskStatus} />
+        <TaskList categoria={categoria_item} taskStatus={refetchtaskStatus} />
 
-        {selectedTaskInput === null ||
-        selectedTaskInput === categoriaItem.descricao ? (
-          <TaskInput
-            category={categoriaItem}
-            onSelectCreateTask={(category) => {
-              setSelectedTaskInput(category);
-              setRefectchTaskStatus(refetchtaskStatus + 1);
-            }}
-          />
-        ) : null}
+        {showTaskInput ? <TaskInputWrapper category={categoria_item} /> : null}
       </CustomizedSectionBox>
     );
   };
@@ -64,7 +59,8 @@ const Main = (props: MainProps) => {
             fontSize: "3rem",
           }}
         >
-          Suas tarefas
+          {" "}
+          Suas tarefas{" "}
         </Typography>
       </CustomizedSectionBox>
       {categorias.map((categoria) => renderCategoriaSection(categoria))}
