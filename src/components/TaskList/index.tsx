@@ -81,7 +81,6 @@ const TaskListWrapper = (props: TaskListWrapperProps) => {
 
   useEffect(() => {
     if (loading === false && prevTaskStatus !== taskStatus) {
-      console.log(taskStatus);
       fetchtasks();
     }
   }, [taskStatus]);
