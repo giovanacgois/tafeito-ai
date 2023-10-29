@@ -1,13 +1,13 @@
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 import { Box, Card, CardActions, CardContent } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 
-import { TaskInputProps } from "./TaskInput";
 import { URL_TAREFAS } from "../../utils/api";
-import { enqueueSnackbar } from "notistack";
+import { TaskInputProps } from "./TaskInput";
 
 const TaskInput = (props: TaskInputProps) => {
   const { onSelectCreateTask, category } = props;
@@ -51,7 +51,6 @@ const TaskInput = (props: TaskInputProps) => {
       setResponse(null);
       setError((err as Error).message);
       enqueueSnackbar("Erro ao criar tarefa", { variant: "error" });
-
     }
   };
 
@@ -63,7 +62,7 @@ const TaskInput = (props: TaskInputProps) => {
             component="label"
             variant="contained"
             onClick={onClick}
-            startIcon={<CloudUploadIcon />}
+            startIcon={<AddTaskIcon />}
           >
             Adicionar Tarefa
           </Button>
@@ -74,13 +73,22 @@ const TaskInput = (props: TaskInputProps) => {
             <CardContent>
               <TextField
                 id="standard-basic"
-                label="Standard"
+                label="Que tarefa deseja adicionar?"
                 variant="standard"
+                size="small"
                 value={taskDescription}
                 onChange={(event) => setTaskDescription(event.target.value)}
               />
             </CardContent>
-            <CardActions>
+            <CardActions
+              sx={{
+                alignSelf: "stretch",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-start",
+                p: 2,
+              }}
+            >
               <Button
                 component="label"
                 variant="contained"
