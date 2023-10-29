@@ -20,6 +20,7 @@ import {
 } from "../../utils/api";
 import DeleteTaskDialog from "../DeleteTaskDialog";
 import { TaskProps } from "./Task";
+import TaskTags from "../TaskTags";
 
 const Task = (props: TaskProps) => {
   const { task, onTaskChange } = props;
@@ -169,6 +170,7 @@ const Task = (props: TaskProps) => {
           />
         </ListItemButton>
       </ListItem>
+      <TaskTags task={task} />
       <DeleteTaskDialog
         task={task}
         openedDialog={openedDialog}

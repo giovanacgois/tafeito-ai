@@ -14,7 +14,7 @@ import { URL_CATEGORIAS } from "../../utils/api";
 const Main = (props: MainProps) => {
   const { categorias } = props;
 
-  const { isEditingTask, selectedTaskInput, refetchTaskStatus: refetchtaskStatus } =
+  const { isEditingTask, selectedTaskInput, refetchTaskStatus } =
     useGlobalContext();
 
   const renderCategoriaSection = (categoria_item: Categoria) => {
@@ -35,7 +35,7 @@ const Main = (props: MainProps) => {
           {categoria_item.descricao}{" "}
         </Typography>
 
-        <TaskList categoria={categoria_item} taskStatus={refetchtaskStatus} />
+        <TaskList categoria={categoria_item} taskStatus={refetchTaskStatus} />
 
         {showTaskInput ? <TaskInputWrapper category={categoria_item} /> : null}
       </CustomizedSectionBox>
@@ -59,7 +59,7 @@ const Main = (props: MainProps) => {
             fontSize: "3rem",
           }}
         >
-          Suas tarefas &#128203; 
+          Suas tarefas &#128203;
         </Typography>
       </CustomizedSectionBox>
       {categorias.map((categoria) => renderCategoriaSection(categoria))}

@@ -6,3 +6,4 @@ export const URL_TAREFAS = `${BASE_API}/tarefas`;
 export const URL_TAREFAS_ATUALIZAR = `${BASE_API}/tarefas/:id`;
 export const URL_TAREFAS_CONCLUIR = `${BASE_API}/tarefas/:id/concluir`;
 export const URL_TAREFAS_REABRIR = `${BASE_API}/tarefas/:id/reabrir`;
+export const URL_TAREFAS_ADICIONAR_ETIQUETA = `${BASE_API}/tarefas/:id/etiquetas/:tag`;

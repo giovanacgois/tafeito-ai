@@ -11,4 +11,5 @@ export type Tarefa = {
   id: IdTarefa;
   id_usuario: number;
   data_conclusao: string | null;
+  etiquetas: string[];
 };
