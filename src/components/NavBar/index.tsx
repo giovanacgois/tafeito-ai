@@ -77,7 +77,7 @@ const NavBar = (props: NavBarProps) => {
               TaFeito
             </Typography>
             {userData ? (
-              <Typography>Bem vindo, {userData.nome}</Typography>
+              <Typography>Bem vindo, <strong>{userData.nome}</strong></Typography>
             ) : null}
           </Box>
 

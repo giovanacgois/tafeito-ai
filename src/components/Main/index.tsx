@@ -25,13 +25,13 @@ const Main = (props: MainProps) => {
     return (
       <CustomizedSectionBox key={categoria_item.id} pt={2} pb={1}>
         <Typography
-          variant="h2"
+          variant="h3"
           sx={{
-            fontSize: "2rem",
+            fontSize: "1.8rem",
             marginBottom: "8px",
+            textTransform: "UpperCase",
           }}
         >
-          {" "}
           {categoria_item.descricao}{" "}
         </Typography>
 
@@ -59,8 +59,7 @@ const Main = (props: MainProps) => {
             fontSize: "3rem",
           }}
         >
-          {" "}
-          Suas tarefas{" "}
+          Suas tarefas &#128203; 
         </Typography>
       </CustomizedSectionBox>
       {categorias.map((categoria) => renderCategoriaSection(categoria))}
