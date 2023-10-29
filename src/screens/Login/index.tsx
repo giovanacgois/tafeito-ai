@@ -1,9 +1,7 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
-// import CardHeader from '@mui/material/CardHeader';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
@@ -73,16 +71,14 @@ const Login = () => {
           data: dataResponse,
         };
       })
-      .then((data) => {
-        console.log("sucesso", JSON.stringify(data));
-        console.log(data);
-        if (data.responseStatus === 422 && data.data?.mensagem) {
-          setErrorMessage(data.data?.mensagem);
-        } else if (data.responseStatus === 400) {
+      .then((response) => {
+        if (response.responseStatus === 422 && response.data?.mensagem) {
+          setErrorMessage(response.data?.mensagem);
+        } else if (response.responseStatus === 400) {
           setErrorMessage("Requisição inválida!");
-        } else if (data.responseStatus === 200) {
-          if (data?.data?.token) {
-            setToken(data?.data?.token);
+        } else if (response.responseStatus === 201) {
+          if (response?.data?.token) {
+            setToken(response?.data?.token);
           }
         }
       })
