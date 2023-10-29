@@ -19,7 +19,7 @@ import DeleteTaskDialog from "../DeleteTaskDialog";
 const Task = (props: TaskProps) => {
   const { task, onTaskChange } = props;
 
-  const { setIsEditingTask, setRefectchTaskStatus, refetchtaskStatus } =
+  const { setIsEditingTask, setRefetchTaskStatus: setRefetchTaskStatus, refetchtaskStatus: refetchTaskStatus } =
     useGlobalContext();
   const [error, setError] = useState<null | string>(null);
   const [openedDialog, setOpenedDialog] = useState(false);
@@ -53,7 +53,7 @@ const Task = (props: TaskProps) => {
       });
       setError(null);
       enqueueSnackbar("Tarefa deletada com sucesso.", { variant: "success" });
-      setRefectchTaskStatus(refetchtaskStatus + 1);
+      setRefetchTaskStatus(refetchTaskStatus + 1);
     } catch (err) {
       setError((err as Error).message);
       enqueueSnackbar("Erro ao deletar a tarefa.", { variant: "error" });

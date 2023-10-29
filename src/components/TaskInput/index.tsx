@@ -15,7 +15,7 @@ const TaskInput = (props: TaskInputProps) => {
 
   const isEdit = task !== undefined;
 
-  const { refetchtaskStatus, setSelectedTaskInput, setRefectchTaskStatus } =
+  const { refetchtaskStatus, setSelectedTaskInput, setRefetchTaskStatus: setRefetchTaskStatus } =
     useGlobalContext();
 
   const [taskDescription, setTaskDescription] = useState<string>(
@@ -49,7 +49,7 @@ const TaskInput = (props: TaskInputProps) => {
       setSelectedTaskInput(null);
       submitTask();
       enqueueSnackbar("Tarefa criada!", { variant: "success" });
-      setRefectchTaskStatus(refetchtaskStatus + 1);
+      setRefetchTaskStatus(refetchtaskStatus + 1);
     } catch (err) {
       setError((err as Error).message);
       enqueueSnackbar("Erro ao criar a tarefa.", { variant: "error" });
@@ -78,7 +78,7 @@ const TaskInput = (props: TaskInputProps) => {
       setSelectedTaskInput(null);
       submitTask();
       enqueueSnackbar("Tarefa atualizada!", { variant: "success" });
-      setRefectchTaskStatus(refetchtaskStatus + 1);
+      setRefetchTaskStatus(refetchtaskStatus + 1);
     } catch (err) {
       setError((err as Error).message);
       enqueueSnackbar("Erro ao criar a tarefa.", { variant: "error" });

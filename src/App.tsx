@@ -10,7 +10,7 @@ function App() {
   const [selectedTaskInput, setSelectedTaskInput] = useState<string | null>(
     null
   );
-  const [refetchtaskStatus, setRefectchTaskStatus] = useState<number>(0);
+  const [refetchtaskStatus, setRefetchTaskStatus] = useState<number>(0);
 
   return (
     <div className="App">
@@ -23,7 +23,7 @@ function App() {
               selectedTaskInput,
               setSelectedTaskInput,
               refetchtaskStatus,
-              setRefectchTaskStatus,
+              setRefetchTaskStatus: setRefetchTaskStatus,
             }}
           >
             <Routes />

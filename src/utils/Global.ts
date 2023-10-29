@@ -6,7 +6,7 @@ export type GlobalContent = {
   selectedTaskInput: string | null;
   setSelectedTaskInput: (c: string | null) => void;
   refetchtaskStatus: number;
-  setRefectchTaskStatus: (c: number) => void;
+  setRefetchTaskStatus: (c: number) => void;
 };
 
 export const MyGlobalContext = createContext<GlobalContent>({
@@ -15,7 +15,7 @@ export const MyGlobalContext = createContext<GlobalContent>({
   selectedTaskInput: null,
   setSelectedTaskInput: () => {},
   refetchtaskStatus: 0,
-  setRefectchTaskStatus: () => {},
+  setRefetchTaskStatus: () => {},
 });
 
 export const useGlobalContext = () => useContext(MyGlobalContext);
