@@ -1,14 +1,35 @@
 import { Box, Typography } from "@mui/material";
-import NavBar from "../NavBar";
 import TaskInput from "../TaskInput";
 import { CustomizedSectionBox } from "./styles";
-import { useState } from "react";
-import { TaskCategory } from "../TaskInput/TaskInput";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { URL_CATEGORIAS } from "../../utils/api";
+import { Categoria } from "../../utils/model";
+import { MainProps } from "./Main";
 
-const Main = () => {
+const Main = (props: MainProps) => {
   const [selectedTaskInput, setSelectedTaskInput] = useState<string | null>(
     null
   );
+
+  const { categorias } = props;
+  const renderCategoriaSection = (categoriaItem: Categoria) => {
+    return (
+      <CustomizedSectionBox key={categoriaItem.id}>
+        <Typography variant="h3">{categoriaItem.descricao}</Typography>
+        <div> TODO: Listar tarefas {categoriaItem.descricao}</div>
+        {selectedTaskInput === null ||
+        selectedTaskInput === categoriaItem.descricao ? (
+          <TaskInput
+            onSelectCreateTask={(category) => {
+              setSelectedTaskInput(category);
+            }}
+            category={categoriaItem.descricao}
+          ></TaskInput>
+        ) : null}
+      </CustomizedSectionBox>
+    );
+  };
 
   return (
     <>
@@ -20,32 +41,26 @@ const Main = () => {
       <CustomizedSectionBox>
         <Typography variant="h1">Suas tarefas</Typography>
       </CustomizedSectionBox>
-      <CustomizedSectionBox>
-        <Typography variant="h3">Pessoal</Typography>
-        <div> TODO: Listar tarefas pessoais</div>
-        {selectedTaskInput === null || selectedTaskInput === "Pessoal" ? (
-          <TaskInput
-            onSelectCreateTask={(category) => {
-              setSelectedTaskInput(category);
-            }}
-            category={"Pessoal"}
-          ></TaskInput>
-        ) : null}
-      </CustomizedSectionBox>
-      <CustomizedSectionBox>
-        <Typography variant="h3">Trabalho</Typography>
-        <div> TODO: Listar tarefas do trabalho</div>
-        {selectedTaskInput === null || selectedTaskInput === "Trabalho" ? (
-          <TaskInput
-            onSelectCreateTask={(category) => {
-              setSelectedTaskInput(category);
-            }}
-            category={"Trabalho"}
-          ></TaskInput>
-        ) : null}
-      </CustomizedSectionBox>
+
+      {categorias.map((categoria) => renderCategoriaSection(categoria))}
     </>
   );
 };
 
-export default Main;
+const MainWrapper = () => {
+  const [categorias, setCategorias] = useState<null | Categoria[]>(null);
+  useEffect(() => {
+    axios.get(URL_CATEGORIAS).then((response) => {
+      setCategorias(response.data);
+    });
+  }, []);
+
+  console.log(categorias);
+
+  if (categorias !== null) {
+    return <Main categorias={categorias} />;
+  }
+  return <div>Loading!</div>;
+};
+
+export default MainWrapper;
