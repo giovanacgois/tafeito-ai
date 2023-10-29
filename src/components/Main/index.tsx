@@ -17,11 +17,10 @@ const Main = (props: MainProps) => {
     return (
       <CustomizedSectionBox key={categoriaItem.id}>
         <Typography variant="h3">{categoriaItem.descricao}</Typography>
-        <div> TODO: Listar tarefas {categoriaItem.descricao}</div>
         {selectedTaskInput === null ||
         selectedTaskInput === categoriaItem.descricao ? (
           <TaskInput
-            category={categoriaItem.descricao}
+            category={categoriaItem}
             onSelectCreateTask={(category) => {
               setSelectedTaskInput(category);
             }}
@@ -49,13 +48,27 @@ const Main = (props: MainProps) => {
 
 const MainWrapper = () => {
   const [categorias, setCategorias] = useState<null | Categoria[]>(null);
-  useEffect(() => {
-    axios.get(URL_CATEGORIAS).then((response) => {
-      setCategorias(response.data);
-    });
-  }, []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  console.log(categorias);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(URL_CATEGORIAS);
+      setCategorias(response.data);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   if (categorias !== null) {
     return <Main categorias={categorias} />;

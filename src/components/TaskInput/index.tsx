@@ -1,28 +1,54 @@
-import { Box, CardActions, TextField } from "@mui/material";
-import { useState } from "react";
-import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { TaskInputProps } from "./TaskInput";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Box, Card, CardActions, CardContent } from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import { useState } from 'react';
+
+import { TaskInputProps } from './TaskInput';
+import { URL_TAREFAS } from '../../utils/api';
 
 const TaskInput = (props: TaskInputProps) => {
   const { onSelectCreateTask, category } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [newTaskDescription, setNewTaskDescription] = useState<string | null>(
-    null
-  );
+  const [taskDescription, setTaskDescription] = useState<null | string>(null);
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState<null | string>(null);
+
   const onClick = () => {
-    onSelectCreateTask(category);
+    onSelectCreateTask(category.descricao);
     setIsOpen(true);
   };
+
   const cancelCreateTask = () => {
     onSelectCreateTask(null);
+    setTaskDescription(null);
     setIsOpen(false);
   };
 
   const createTask = async () => {
-    setNewTaskDescription(null);
-    onSelectCreateTask(null);
-    setIsOpen(false);
+    const payload = {
+      // your post data goes here
+      id_categoria: category.id,
+      descricao: taskDescription,
+    };
+
+    try {
+      const response = await axios.post(URL_TAREFAS, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setResponse(response.data);
+      setError(null);
+      setTaskDescription(null);
+      onSelectCreateTask(null);
+      setIsOpen(false);
+    } catch (err) {
+      setResponse(null);
+      setError((err as Error).message);
+    }
   };
 
   return (
@@ -35,39 +61,38 @@ const TaskInput = (props: TaskInputProps) => {
             onClick={onClick}
             startIcon={<CloudUploadIcon />}
           >
-            Adicionar tarefa
+            Adicionar Tarefa
           </Button>
         </Box>
       ) : (
         <Box>
-          <TextField
-            id="standard-basic"
-            label="standard"
-            variant="standard"
-            value={newTaskDescription}
-            onChange={(event) => setNewTaskDescription(event.target.value)}
-          />
-          <CardActions
-            sx={{
-              alignSelf: "stretch",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-start",
-              // 👇 Edit padding to further adjust position
-              p: 2,
-            }}
-          >
-            <Button
-              component="label"
-              variant="contained"
-              onClick={cancelCreateTask}
-            >
-              Cancelar
-            </Button>
-            <Button component="label" variant="contained" onClick={createTask}>
-              Criar
-            </Button>
-          </CardActions>
+          <Card>
+            <CardContent>
+              <TextField
+                id="standard-basic"
+                label="Standard"
+                variant="standard"
+                value={taskDescription}
+                onChange={(event) => setTaskDescription(event.target.value)}
+              />
+            </CardContent>
+            <CardActions>
+              <Button
+                component="label"
+                variant="contained"
+                onClick={cancelCreateTask}
+              >
+                Cancelar
+              </Button>
+              <Button
+                component="label"
+                variant="contained"
+                onClick={createTask}
+              >
+                Criar
+              </Button>
+            </CardActions>
+          </Card>
         </Box>
       )}
     </Box>
