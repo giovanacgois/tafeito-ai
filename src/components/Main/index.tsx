@@ -14,7 +14,7 @@ import { URL_CATEGORIAS } from "../../utils/api";
 const Main = (props: MainProps) => {
   const { categorias } = props;
 
-  const { isEditingTask, selectedTaskInput, refetchtaskStatus } =
+  const { isEditingTask, selectedTaskInput, refetchTaskStatus: refetchtaskStatus } =
     useGlobalContext();
 
   const renderCategoriaSection = (categoria_item: Categoria) => {

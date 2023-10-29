@@ -4,3 +4,5 @@ export const URL_LOGIN = `${URL_USUARIOS}/login`;
 export const URL_CATEGORIAS = `${BASE_API}/categorias`;
 export const URL_TAREFAS = `${BASE_API}/tarefas`;
 export const URL_TAREFAS_ATUALIZAR = `${BASE_API}/tarefas/:id`;
+export const URL_TAREFAS_CONCLUIR = `${BASE_API}/tarefas/:id/concluir`;
+export const URL_TAREFAS_REABRIR = `${BASE_API}/tarefas/:id/reabrir`;

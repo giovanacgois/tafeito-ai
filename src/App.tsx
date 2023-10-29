@@ -22,7 +22,7 @@ function App() {
               setIsEditingTask,
               selectedTaskInput,
               setSelectedTaskInput,
-              refetchtaskStatus,
+              refetchTaskStatus: refetchtaskStatus,
               setRefetchTaskStatus: setRefetchTaskStatus,
             }}
           >

@@ -10,5 +10,5 @@ export type Tarefa = {
   id_categoria: number;
   id: IdTarefa;
   id_usuario: number;
-  data_conclusao: Date | null;
+  data_conclusao: string | null;
 };

@@ -5,16 +5,16 @@ export type GlobalContent = {
   setIsEditingTask: (c: boolean) => void;
   selectedTaskInput: string | null;
   setSelectedTaskInput: (c: string | null) => void;
-  refetchtaskStatus: number;
+  refetchTaskStatus: number;
   setRefetchTaskStatus: (c: number) => void;
 };
 
 export const MyGlobalContext = createContext<GlobalContent>({
-  isEditingTask: false, // set a default value
+  isEditingTask: false,
   setIsEditingTask: () => {},
   selectedTaskInput: null,
   setSelectedTaskInput: () => {},
-  refetchtaskStatus: 0,
+  refetchTaskStatus: 0,
   setRefetchTaskStatus: () => {},
 });
 

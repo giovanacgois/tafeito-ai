@@ -15,7 +15,7 @@ const TaskInput = (props: TaskInputProps) => {
 
   const isEdit = task !== undefined;
 
-  const { refetchtaskStatus, setSelectedTaskInput, setRefetchTaskStatus: setRefetchTaskStatus } =
+  const { refetchTaskStatus: refetchtaskStatus, setSelectedTaskInput, setRefetchTaskStatus: setRefetchTaskStatus } =
     useGlobalContext();
 
   const [taskDescription, setTaskDescription] = useState<string>(

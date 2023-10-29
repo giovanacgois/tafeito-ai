@@ -2,13 +2,13 @@ import { Box } from "@mui/material";
 import List from "@mui/material/List";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../../utils/Global";
 import { URL_TAREFAS } from "../../utils/api";
 import { usePreviousValue } from "../../utils/hooks";
 import { Tarefa } from "../../utils/model";
-import { TaskListProps, TaskListWrapperProps } from "./TaskList";
 import Task from "../Task";
 import TaskInput from "../TaskInput";
-import { useGlobalContext } from "../../utils/Global";
+import { TaskListProps, TaskListWrapperProps } from "./TaskList";
 
 const TaskList = (props: TaskListProps) => {
   const { tasks, categoria } = props;
@@ -64,9 +64,11 @@ const TaskListWrapper = (props: TaskListWrapperProps) => {
     setLoading(true);
     try {
       const response = await axios.get(URL_TAREFAS);
-      const tasksByCategory = response.data.filter(
-        (task: Tarefa) => task.id_categoria === categoria.id
-      );
+      const tasksByCategory = response.data
+        .filter((task: Tarefa) => task.id_categoria === categoria.id)
+        .sort((taskA: Tarefa, taskB: Tarefa) => {
+          return taskA.id - taskB.id;
+        });
       setTasks(tasksByCategory);
     } catch (err) {
       if (err instanceof Error) {
