@@ -7,7 +7,9 @@ import { TaskInputProps } from "./TaskInput";
 const TaskInput = (props: TaskInputProps) => {
   const { onSelectCreateTask, category } = props;
   const [isOpen, setIsOpen] = useState(false);
-
+  const [newTaskDescription, setNewTaskDescription] = useState<string | null>(
+    null
+  );
   const onClick = () => {
     onSelectCreateTask(category);
     setIsOpen(true);
@@ -18,7 +20,7 @@ const TaskInput = (props: TaskInputProps) => {
   };
 
   const createTask = async () => {
-    alert("Criando tarefa :)");
+    setNewTaskDescription(null);
     onSelectCreateTask(null);
     setIsOpen(false);
   };
@@ -38,7 +40,13 @@ const TaskInput = (props: TaskInputProps) => {
         </Box>
       ) : (
         <Box>
-          <TextField id="standard-basic" label="standard" variant="standard" />
+          <TextField
+            id="standard-basic"
+            label="standard"
+            variant="standard"
+            value={newTaskDescription}
+            onChange={(event) => setNewTaskDescription(event.target.value)}
+          />
           <CardActions
             sx={{
               alignSelf: "stretch",

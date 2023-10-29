@@ -21,10 +21,10 @@ const Main = (props: MainProps) => {
         {selectedTaskInput === null ||
         selectedTaskInput === categoriaItem.descricao ? (
           <TaskInput
+            category={categoriaItem.descricao}
             onSelectCreateTask={(category) => {
               setSelectedTaskInput(category);
             }}
-            category={categoriaItem.descricao}
           ></TaskInput>
         ) : null}
       </CustomizedSectionBox>
