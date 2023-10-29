@@ -28,8 +28,7 @@ const NavBar = (props: NavBarProps) => {
     axios.get("http://localhost:3000/usuarios").then((response) => {
       setUserData(response.data.usuario);
     });
-  });
-
+  }, []);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
