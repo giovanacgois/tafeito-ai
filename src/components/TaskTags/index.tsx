@@ -83,7 +83,7 @@ const TaskTags = (props: TaskTagsProps) => {
   return (
     <Box display={"flex"} px={1} pb={2} alignItems={"center"} flexWrap={"wrap"}>
       {task.etiquetas.map((tag) => (
-        <Box pr={1} pb={1}>
+        <Box key={"task-tag-" + tag} pr={1} pb={1}>
           <Chip
             color="secondary"
             key={tag}

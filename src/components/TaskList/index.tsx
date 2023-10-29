@@ -18,7 +18,7 @@ const TaskList = (props: TaskListProps) => {
   const renderTasks = () => {
     return tasks.map((tarefa) => {
       return (
-        <Box key={tarefa.id}>
+        <Box key={"task-list-task-" + tarefa.id}>
           {tarefa.id === editTaskId ? (
             <TaskInput
               cancelTask={() => {

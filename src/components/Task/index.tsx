@@ -125,7 +125,7 @@ const Task = (props: TaskProps) => {
   return (
     <>
       <ListItem
-        key={task.id}
+        key={"task-" + setIsEditingTask + task.id}
         secondaryAction={
           <Box>
             <IconButton
