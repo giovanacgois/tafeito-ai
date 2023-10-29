@@ -16,6 +16,7 @@ import axios from "axios";
 import { NavBarProps } from "./NavBar";
 import { useEffect, useState } from "react";
 import { stringify } from "querystring";
+import { URL_USUARIOS } from "../../utils/api";
 
 const NavBar = (props: NavBarProps) => {
   const { logout } = props;
@@ -25,7 +26,7 @@ const NavBar = (props: NavBarProps) => {
     admin: boolean;
   }>();
   useEffect(() => {
-    axios.get("http://localhost:3000/usuarios").then((response) => {
+    axios.get(URL_USUARIOS).then((response) => {
       setUserData(response.data.usuario);
     });
   }, []);
