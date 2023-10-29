@@ -1,12 +1,13 @@
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Box, Card, CardActions, CardContent } from '@mui/material';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import axios from 'axios';
-import { useState } from 'react';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Box, Card, CardActions, CardContent } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import axios from "axios";
+import { useState } from "react";
 
-import { TaskInputProps } from './TaskInput';
-import { URL_TAREFAS } from '../../utils/api';
+import { TaskInputProps } from "./TaskInput";
+import { URL_TAREFAS } from "../../utils/api";
+import { enqueueSnackbar } from "notistack";
 
 const TaskInput = (props: TaskInputProps) => {
   const { onSelectCreateTask, category } = props;
@@ -45,9 +46,12 @@ const TaskInput = (props: TaskInputProps) => {
       setTaskDescription(null);
       onSelectCreateTask(null);
       setIsOpen(false);
+      enqueueSnackbar("Tarefa criada", { variant: "success" });
     } catch (err) {
       setResponse(null);
       setError((err as Error).message);
+      enqueueSnackbar("Erro ao criar tarefa", { variant: "error" });
+
     }
   };
 
