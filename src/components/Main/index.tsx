@@ -1,18 +1,23 @@
 import { Box, Typography } from "@mui/material";
 import TaskInput from "../TaskInput";
+
 import { CustomizedSectionBox } from "./styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { URL_CATEGORIAS } from "../../utils/api";
-import { Categoria } from "../../utils/model";
+
+import { Categoria, Tarefa } from "../../utils/model";
+import TaskList from "../TaskList";
 import { MainProps } from "./Main";
+import { URL_CATEGORIAS } from "../../utils/api";
 
 const Main = (props: MainProps) => {
+  const { categorias } = props;
+
   const [selectedTaskInput, setSelectedTaskInput] = useState<string | null>(
     null
   );
+  const [refetchtaskStatus, setRefectchTaskStatus] = useState<number>(0);
 
-  const { categorias } = props;
   const renderCategoriaSection = (categoriaItem: Categoria) => {
     return (
       <CustomizedSectionBox key={categoriaItem.id} pt={2} pb={1}>
@@ -25,26 +30,33 @@ const Main = (props: MainProps) => {
         >
           {categoriaItem.descricao}
         </Typography>
+
+        <TaskList categoria={categoriaItem} taskStatus={refetchtaskStatus} />
+
         {selectedTaskInput === null ||
         selectedTaskInput === categoriaItem.descricao ? (
           <TaskInput
             category={categoriaItem}
             onSelectCreateTask={(category) => {
               setSelectedTaskInput(category);
+              setRefectchTaskStatus(refetchtaskStatus + 1);
             }}
-          ></TaskInput>
+          />
         ) : null}
       </CustomizedSectionBox>
     );
   };
 
   return (
-    <>
-      <Box
-        display="flex"
-        flex-weap={"wrap"}
-        sx={{ textAlign: "center", maxWidth: "720px", margin: "0 auto" }}
-      ></Box>
+    <Box
+      display="flex"
+      flexWrap={"wrap"}
+      sx={{
+        textAlign: "center",
+        maxWidth: "720px",
+        margin: "0 auto",
+      }}
+    >
       <CustomizedSectionBox>
         <Typography
           variant="h1"
@@ -55,9 +67,8 @@ const Main = (props: MainProps) => {
           Suas tarefas
         </Typography>
       </CustomizedSectionBox>
-
       {categorias.map((categoria) => renderCategoriaSection(categoria))}
-    </>
+    </Box>
   );
 };
 
@@ -85,10 +96,11 @@ const MainWrapper = () => {
     fetchCategories();
   }, []);
 
-  if (categorias !== null) {
+  if (categorias) {
     return <Main categorias={categorias} />;
   }
-  return <div>Loading!</div>;
+
+  return <div>Carregando!</div>;
 };
 
 export default MainWrapper;

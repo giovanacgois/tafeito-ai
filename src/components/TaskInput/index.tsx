@@ -10,26 +10,23 @@ import { URL_TAREFAS } from "../../utils/api";
 import { TaskInputProps } from "./TaskInput";
 
 const TaskInput = (props: TaskInputProps) => {
-  const { onSelectCreateTask, category } = props;
+  const { category } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [taskDescription, setTaskDescription] = useState<null | string>(null);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState<null | string>(null);
 
   const onClick = () => {
-    onSelectCreateTask(category.descricao);
     setIsOpen(true);
   };
 
   const cancelCreateTask = () => {
-    onSelectCreateTask(null);
     setTaskDescription(null);
     setIsOpen(false);
   };
 
   const createTask = async () => {
     const payload = {
-      // your post data goes here
       id_categoria: category.id,
       descricao: taskDescription,
     };
@@ -44,7 +41,6 @@ const TaskInput = (props: TaskInputProps) => {
       setResponse(response.data);
       setError(null);
       setTaskDescription(null);
-      onSelectCreateTask(null);
       setIsOpen(false);
       enqueueSnackbar("Tarefa criada", { variant: "success" });
     } catch (err) {
