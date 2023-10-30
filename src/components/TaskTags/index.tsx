@@ -6,6 +6,7 @@ import axios from "axios";
 import { TaskTagsProps } from "./TaskTags";
 import { useGlobalContext } from "../../utils/Global";
 import { URL_TAREFAS_ADICIONAR_ETIQUETA } from "../../utils/api";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const TaskTags = (props: TaskTagsProps) => {
   const { task } = props;
@@ -17,7 +18,7 @@ const TaskTags = (props: TaskTagsProps) => {
     return (
       <Tooltip title="Adicionar etiqueta">
         <IconButton
-          color="secondary"
+          color="warning"
           edge="end"
           aria-label="Adicionar etiqueta"
           onClick={() => {
@@ -37,7 +38,7 @@ const TaskTags = (props: TaskTagsProps) => {
       taskId.toString()
     ).replace(":tag", tag);
     try {
-      await axios.post(CUSTOM_TASK_TAG_URL, {
+      await apiClient.post(CUSTOM_TASK_TAG_URL, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -56,14 +57,14 @@ const TaskTags = (props: TaskTagsProps) => {
       taskId.toString()
     ).replace(":tag", tag);
     try {
-      await axios.delete(CUSTOM_TASK_TAG_URL, {
+      await apiClient.delete(CUSTOM_TASK_TAG_URL, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       setRefetchTaskStatus(refetchTaskStatus + 1);
     } catch (err) {
-      console.error("erro ao adicionar tag");
+      console.error("erro ao remover tag");
     }
     setIsAdding(false);
   };
@@ -85,7 +86,7 @@ const TaskTags = (props: TaskTagsProps) => {
       {task.etiquetas.map((tag) => (
         <Box key={"task-tag-" + tag} pr={1} pb={1}>
           <Chip
-            color="secondary"
+            color="warning"
             key={tag}
             label={tag}
             size="small"

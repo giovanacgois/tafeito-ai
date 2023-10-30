@@ -9,6 +9,7 @@ import axios from "axios";
 import { URL_TAREFAS, URL_TAREFAS_ATUALIZAR } from "../../utils/api";
 import { TaskInputProps } from "./TaskInput";
 import { useGlobalContext } from "../../utils/Global";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const TaskInput = (props: TaskInputProps) => {
   const { category, task, cancelTask, submitTask } = props;
@@ -39,7 +40,7 @@ const TaskInput = (props: TaskInputProps) => {
     };
 
     try {
-      await axios.post(URL_TAREFAS, payload, {
+      await apiClient.post(URL_TAREFAS, payload, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -68,7 +69,7 @@ const TaskInput = (props: TaskInputProps) => {
       taskId.toString()
     );
     try {
-      await axios.patch(custom_task_url, payload, {
+      await apiClient.patch(custom_task_url, payload, {
         headers: {
           "Content-Type": "application/json",
         },

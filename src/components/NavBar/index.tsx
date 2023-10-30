@@ -17,6 +17,7 @@ import { NavBarProps } from "./NavBar";
 import { useEffect, useState } from "react";
 import { stringify } from "querystring";
 import { URL_USUARIOS } from "../../utils/api";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const NavBar = (props: NavBarProps) => {
   const { logout } = props;
@@ -26,7 +27,7 @@ const NavBar = (props: NavBarProps) => {
     admin: boolean;
   }>();
   useEffect(() => {
-    axios.get(URL_USUARIOS).then((response) => {
+    apiClient.get(URL_USUARIOS).then((response) => {
       setUserData(response.data.usuario);
     });
   }, []);
@@ -77,7 +78,9 @@ const NavBar = (props: NavBarProps) => {
               TaFeito
             </Typography>
             {userData ? (
-              <Typography>Bem vindo, <strong>{userData.nome}</strong></Typography>
+              <Typography>
+                Bem vindo, <strong>{userData.nome}</strong>
+              </Typography>
             ) : null}
           </Box>
 

@@ -9,6 +9,7 @@ import { Tarefa } from "../../utils/model";
 import Task from "../Task";
 import TaskInput from "../TaskInput";
 import { TaskListProps, TaskListWrapperProps } from "./TaskList";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const TaskList = (props: TaskListProps) => {
   const { tasks, categoria } = props;
@@ -63,7 +64,7 @@ const TaskListWrapper = (props: TaskListWrapperProps) => {
   const fetchtasks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(URL_TAREFAS);
+      const response = await apiClient.get(URL_TAREFAS);
       const tasksByCategory = response.data
         .filter((task: Tarefa) => task.id_categoria === categoria.id)
         .sort((taskA: Tarefa, taskB: Tarefa) => {

@@ -1,9 +1,9 @@
 export const BASE_API = "http://localhost:3000";
-export const URL_USUARIOS = `${BASE_API}/usuarios`;
+export const URL_USUARIOS = `/usuarios`;
 export const URL_LOGIN = `${URL_USUARIOS}/login`;
-export const URL_CATEGORIAS = `${BASE_API}/categorias`;
-export const URL_TAREFAS = `${BASE_API}/tarefas`;
-export const URL_TAREFAS_ATUALIZAR = `${BASE_API}/tarefas/:id`;
-export const URL_TAREFAS_CONCLUIR = `${BASE_API}/tarefas/:id/concluir`;
-export const URL_TAREFAS_REABRIR = `${BASE_API}/tarefas/:id/reabrir`;
-export const URL_TAREFAS_ADICIONAR_ETIQUETA = `${BASE_API}/tarefas/:id/etiquetas/:tag`;
+export const URL_CATEGORIAS = `/categorias`;
+export const URL_TAREFAS = `/tarefas`;
+export const URL_TAREFAS_ATUALIZAR = `/tarefas/:id`;
+export const URL_TAREFAS_CONCLUIR = `/tarefas/:id/concluir`;
+export const URL_TAREFAS_REABRIR = `/tarefas/:id/reabrir`;
+export const URL_TAREFAS_ADICIONAR_ETIQUETA = `/tarefas/:id/etiquetas/:tag`;

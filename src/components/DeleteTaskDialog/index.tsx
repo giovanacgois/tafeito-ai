@@ -35,7 +35,7 @@ import {
           <Button color="primary" variant="contained" onClick={cancelCallback}>
             Cancelar
           </Button>
-          <Button color="secondary" variant="contained" onClick={deleteCallback}>
+          <Button color="warning" variant="contained" onClick={deleteCallback}>
             Deletar
           </Button>
         </DialogActions>

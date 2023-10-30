@@ -10,6 +10,7 @@ import TaskList from "../TaskList";
 import { MainProps } from "./Main";
 import { useGlobalContext } from "../../utils/Global";
 import { URL_CATEGORIAS } from "../../utils/api";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const Main = (props: MainProps) => {
   const { categorias } = props;
@@ -74,7 +75,7 @@ const MainWrapper = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(URL_CATEGORIAS);
+      const response = await apiClient.get(URL_CATEGORIAS);
       setCategorias(response.data);
     } catch (err) {
       if (err instanceof Error) {

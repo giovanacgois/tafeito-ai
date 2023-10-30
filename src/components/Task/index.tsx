@@ -21,6 +21,7 @@ import {
 import DeleteTaskDialog from "../DeleteTaskDialog";
 import { TaskProps } from "./Task";
 import TaskTags from "../TaskTags";
+import { apiClient } from "../../provider/customAxiosClient";
 
 const Task = (props: TaskProps) => {
   const { task, onTaskChange } = props;
@@ -57,7 +58,7 @@ const Task = (props: TaskProps) => {
       taskId.toString()
     );
     try {
-      await axios.delete(custom_task_url, {
+      await apiClient.delete(custom_task_url, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -78,7 +79,7 @@ const Task = (props: TaskProps) => {
       taskId.toString()
     );
     try {
-      await axios.post(custom_task_url, {
+      await apiClient.post(custom_task_url, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -101,7 +102,7 @@ const Task = (props: TaskProps) => {
       taskId.toString()
     );
     try {
-      await axios.post(custom_task_url, {
+      await apiClient.post(custom_task_url, {
         headers: {
           "Content-Type": "application/json",
         },
