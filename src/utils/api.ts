@@ -7,3 +7,4 @@ export const URL_TAREFAS_ATUALIZAR = `/tarefas/:id`;
 export const URL_TAREFAS_CONCLUIR = `/tarefas/:id/concluir`;
 export const URL_TAREFAS_REABRIR = `/tarefas/:id/reabrir`;
 export const URL_TAREFAS_ADICIONAR_ETIQUETA = `/tarefas/:id/etiquetas/:tag`;
+export const URL_TAREFAS_PLANEJAR_PROJETO = `tarefas/planejar-projeto`;

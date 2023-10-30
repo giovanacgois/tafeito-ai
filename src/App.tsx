@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import "./App.css";
 import AuthProvider from "./provider/authProvider";
 import { SnackbarProvider } from "notistack";
-import { MyGlobalContext } from "./utils/Global";
+import { MyGlobalContext, useGlobalContext } from "./utils/Global";
 import Routes from "./routes";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     null
   );
   const [refetchtaskStatus, setRefetchTaskStatus] = useState<number>(0);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);    useGlobalContext();
   return (
     <div className="App">
       <AuthProvider>
@@ -24,6 +24,8 @@ function App() {
               setSelectedTaskInput,
               refetchTaskStatus: refetchtaskStatus,
               setRefetchTaskStatus: setRefetchTaskStatus,
+              isLoading,
+              setIsLoading,
             }}
           >
             <Routes />

@@ -11,6 +11,7 @@ import { MainProps } from "./Main";
 import { useGlobalContext } from "../../utils/Global";
 import { URL_CATEGORIAS } from "../../utils/api";
 import { apiClient } from "../../provider/customAxiosClient";
+import ProjectTasks from "../ProjectTasks";
 
 const Main = (props: MainProps) => {
   const { categorias } = props;
@@ -62,6 +63,7 @@ const Main = (props: MainProps) => {
         >
           Suas tarefas &#128203;
         </Typography>
+        <ProjectTasks categories={categorias} />
       </CustomizedSectionBox>
       {categorias.map((categoria) => renderCategoriaSection(categoria))}
     </Box>
