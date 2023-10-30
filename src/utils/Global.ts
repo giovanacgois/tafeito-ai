@@ -9,6 +9,9 @@ export type GlobalContent = {
   setRefetchTaskStatus: (c: number) => void;
   isLoading: boolean;
   setIsLoading: (c: boolean) => void;
+  softDeletedTasks: number[];
+  setSoftDeletedTasks: (c: number[]) => void;
+  softDeletedTasksRef: any;
 };
 
 export const MyGlobalContext = createContext<GlobalContent>({
@@ -20,6 +23,9 @@ export const MyGlobalContext = createContext<GlobalContent>({
   setRefetchTaskStatus: () => {},
   isLoading: false,
   setIsLoading: () => {},
+  softDeletedTasks: [],
+  setSoftDeletedTasks: () => {},
+  softDeletedTasksRef: [],
 });
 
 export const useGlobalContext = () => useContext(MyGlobalContext);

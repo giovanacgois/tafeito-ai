@@ -16,8 +16,11 @@ const TaskInput = (props: TaskInputProps) => {
 
   const isEdit = task !== undefined;
 
-  const { refetchTaskStatus: refetchtaskStatus, setSelectedTaskInput, setRefetchTaskStatus: setRefetchTaskStatus } =
-    useGlobalContext();
+  const {
+    refetchTaskStatus: refetchtaskStatus,
+    setSelectedTaskInput,
+    setRefetchTaskStatus: setRefetchTaskStatus,
+  } = useGlobalContext();
 
   const [taskDescription, setTaskDescription] = useState<string>(
     task?.descricao ?? ""
@@ -34,7 +37,6 @@ const TaskInput = (props: TaskInputProps) => {
 
   const createTask = async () => {
     const payload = {
-      // your post data goes here
       id_categoria: category.id,
       descricao: taskDescription,
     };
@@ -60,7 +62,6 @@ const TaskInput = (props: TaskInputProps) => {
   const editTask = async () => {
     const payload = {
       id: task?.id,
-      // your post data goes here
       descricao: taskDescription,
     };
     const taskId = task?.id ?? -1;

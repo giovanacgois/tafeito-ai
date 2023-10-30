@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,9 +9,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import axios from "axios";
 import { format, parseISO } from "date-fns";
-import { useSnackbar } from "notistack";
+import { SnackbarKey, closeSnackbar, useSnackbar } from "notistack";
+import { apiClient } from "../../provider/customAxiosClient";
 import { useGlobalContext } from "../../utils/Global";
 import {
   URL_TAREFAS_ATUALIZAR,
@@ -19,10 +19,8 @@ import {
   URL_TAREFAS_REABRIR,
 } from "../../utils/api";
 import DeleteTaskDialog from "../DeleteTaskDialog";
-import { TaskProps } from "./Task";
 import TaskTags from "../TaskTags";
-import { apiClient } from "../../provider/customAxiosClient";
-
+import { TaskProps } from "./Task";
 const Task = (props: TaskProps) => {
   const { task, onTaskChange } = props;
 
@@ -30,12 +28,29 @@ const Task = (props: TaskProps) => {
     setIsEditingTask,
     setRefetchTaskStatus: setRefetchTaskStatus,
     refetchTaskStatus: refetchTaskStatus,
+    softDeletedTasks,
+    setSoftDeletedTasks,
+    softDeletedTasksRef,
   } = useGlobalContext();
   const [error, setError] = useState<null | string>(null);
   const [openedDialog, setOpenedDialog] = useState(false);
   const [checked, setChecked] = useState([0]);
   const { enqueueSnackbar } = useSnackbar();
   const labelId = `checkbox-list-label-${task.id}`;
+  const action = (snackbarId: SnackbarKey) => (
+    <>
+      <Button
+        variant="text"
+        onClick={() => {
+          const filteredValues = softDeletedTasks.filter((x) => x !== task?.id);
+          setSoftDeletedTasks(filteredValues);
+          closeSnackbar(snackbarId);
+        }}
+      >
+        Desfazer
+      </Button>
+    </>
+  );
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -58,13 +73,23 @@ const Task = (props: TaskProps) => {
       taskId.toString()
     );
     try {
-      await apiClient.delete(custom_task_url, {
-        headers: {
-          "Content-Type": "application/json",
+      const newSoftDeletedTasks = softDeletedTasks.concat(task?.id);
+      setSoftDeletedTasks(newSoftDeletedTasks);
+      setError(null);
+      enqueueSnackbar("Tarefa deletada!", {
+        variant: "success",
+        action: action,
+        onExited: async () => {
+          if (softDeletedTasksRef?.current?.includes(task?.id)) {
+            await apiClient.delete(custom_task_url, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+          }
+          setRefetchTaskStatus(refetchTaskStatus + 1);
         },
       });
-      setError(null);
-      enqueueSnackbar("Tarefa deletada com sucesso.", { variant: "success" });
       setRefetchTaskStatus(refetchTaskStatus + 1);
     } catch (err) {
       setError((err as Error).message);

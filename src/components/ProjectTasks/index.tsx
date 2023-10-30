@@ -1,20 +1,19 @@
 import {
-  Box,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  LinearProgress,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    LinearProgress,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -24,7 +23,6 @@ import { useGlobalContext } from "../../utils/Global";
 import { URL_TAREFAS, URL_TAREFAS_PLANEJAR_PROJETO } from "../../utils/api";
 import { Categoria } from "../../utils/model";
 import { ProjectTasksProps } from "./ProjectTasks";
-import { CustomizedSectionBox } from "../Main/styles";
 
 const ProjectTasks = (props: ProjectTasksProps) => {
   const { categories } = props;

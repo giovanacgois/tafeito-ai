@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import TaskInputWrapper from "../TaskInputWrapper";
 
 import { CustomizedSectionBox } from "./styles";
@@ -25,22 +25,24 @@ const Main = (props: MainProps) => {
       (selectedTaskInput === null ||
         selectedTaskInput === categoria_item.descricao);
     return (
-      <CustomizedSectionBox key={categoria_item.id} pt={2} pb={1}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: "1.8rem",
-            marginBottom: "8px",
-            textTransform: "UpperCase",
-          }}
-        >
-          {categoria_item.descricao}{" "}
-        </Typography>
+        <CustomizedSectionBox key={categoria_item.id} pt={2} pb={1}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: "1.8rem",
+              marginBottom: "8px",
+              textTransform: "UpperCase",
+            }}
+          >
+            &#128203; {categoria_item.descricao}
+          </Typography>
 
-        <TaskList categoria={categoria_item} taskStatus={refetchTaskStatus} />
+          <TaskList categoria={categoria_item} taskStatus={refetchTaskStatus} />
 
-        {showTaskInput ? <TaskInputWrapper category={categoria_item} /> : null}
-      </CustomizedSectionBox>
+          {showTaskInput ? (
+            <TaskInputWrapper category={categoria_item} />
+          ) : null}
+        </CustomizedSectionBox>
     );
   };
 
@@ -59,9 +61,10 @@ const Main = (props: MainProps) => {
           variant="h1"
           sx={{
             fontSize: "3rem",
+            color: "#1e49ad",
           }}
         >
-          Suas tarefas &#128203;
+          Suas tarefas
         </Typography>
         <ProjectTasks categories={categorias} />
       </CustomizedSectionBox>
@@ -98,7 +101,11 @@ const MainWrapper = () => {
     return <Main categorias={categorias} />;
   }
 
-  return <div>Carregando!</div>;
+  return (
+    <Box sx={{ width: "100%" }}>
+      <LinearProgress />
+    </Box>
+  );
 };
 
 export default MainWrapper;

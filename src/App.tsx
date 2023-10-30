@@ -4,6 +4,7 @@ import AuthProvider from "./provider/authProvider";
 import { SnackbarProvider } from "notistack";
 import { MyGlobalContext, useGlobalContext } from "./utils/Global";
 import Routes from "./routes";
+import { useStateWithRef } from "./utils/hooks";
 
 function App() {
   const [isEditingTask, setIsEditingTask] = useState<boolean>(false);
@@ -11,7 +12,9 @@ function App() {
     null
   );
   const [refetchtaskStatus, setRefetchTaskStatus] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);    useGlobalContext();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [softDeletedTasks, setSoftDeletedTasks, softDeletedTasksRef] =
+    useStateWithRef([]);
   return (
     <div className="App">
       <AuthProvider>
@@ -26,6 +29,9 @@ function App() {
               setRefetchTaskStatus: setRefetchTaskStatus,
               isLoading,
               setIsLoading,
+              softDeletedTasks,
+              setSoftDeletedTasks,
+              softDeletedTasksRef,
             }}
           >
             <Routes />
